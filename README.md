@@ -9,3 +9,6 @@ This tool can view any ODS file created using the standard defined [here](https:
 ## Usage
 After selecting a file a tree is shown. (Large files could take some time to load.)  
 Select on an object in the tree to view it's properties.
+
+## Pre-Compiled Download
+[Click here for a pre-compiled jar file]()
