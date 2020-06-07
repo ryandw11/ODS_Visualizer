@@ -26,7 +26,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>false</addClasspath>
-                            <mainClass>org.kakara.client.Main</mainClass>
+                            <mainClass>me.ryandw11.odsvisualizer.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
