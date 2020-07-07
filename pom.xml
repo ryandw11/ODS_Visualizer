@@ -6,7 +6,7 @@
 
     <groupId>me.ryandw11</groupId>
     <artifactId>ODS_Visualizer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
 
     <build>
         <plugins>
@@ -49,15 +49,15 @@
     </build>
     <repositories>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <id>Ryandw11-SNAPSHOT</id>
+            <url>https://repo.thevideogamevillage.com/repository/maven-snapshots/</url>
         </repository>
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>com.github.ryandw11</groupId>
-            <artifactId>ODS</artifactId>
-            <version>4db289ebdc</version>
+            <groupId>me.ryandw11</groupId>
+            <artifactId>ods</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -12,6 +12,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,6 +25,9 @@ import java.util.zip.InflaterInputStream;
 
 public class ViewFile extends JFrame {
     private JPanel tagPnl;
+    DefaultMutableTreeNode top;
+    ObjectDataStructure ods;
+    JTree tree;
     public ViewFile(File file){
         super("Viewing ODS File: " + file.getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,8 +36,10 @@ public class ViewFile extends JFrame {
         this.setLocationRelativeTo(null);
         System.out.println(getCompressionType(file));
         ObjectDataStructure ods = new ObjectDataStructure(file, getCompressionType(file));
+        this.ods = ods;
 
         DefaultMutableTreeNode top = new DefaultMutableTreeNode(file.getName());
+        this.top = top;
         try {
             createNodes(top, ods.getAll(), false);
         }catch(Exception ex){
@@ -38,7 +47,7 @@ public class ViewFile extends JFrame {
             System.exit(-1);
         }
         JTree tree = new JTree(top);
-
+        this.tree = tree;
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.addTreeSelectionListener(e -> {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
@@ -57,7 +66,40 @@ public class ViewFile extends JFrame {
         sidePnl.setLayout(new BoxLayout(sidePnl, BoxLayout.Y_AXIS));
         this.add(sidePnl, BorderLayout.EAST);
 
+        this.setJMenuBar(setupTopBar());
+    }
 
+    private JMenuBar setupTopBar(){
+        JMenu file = new JMenu("File");
+        JMenuItem reload = new JMenuItem("Reload");
+        reload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+        reload.addActionListener(e -> {
+            top.removeAllChildren();
+            createNodes(top, ods.getAll(), false);
+            tree.updateUI();
+        });
+
+        JMenuItem open = new JMenuItem("Open ...");
+        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
+        open.addActionListener(e -> {
+            FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+            dialog.setMode(FileDialog.LOAD);
+            dialog.setVisible(true);
+            File tempFile = new File(dialog.getDirectory() + dialog.getFile());
+            if(!tempFile.exists()){
+                return;
+            }
+            ods = new ObjectDataStructure(tempFile, getCompressionType(tempFile));
+            top.removeAllChildren();
+            createNodes(top, ods.getAll(), false);
+            tree.updateUI();
+        });
+        file.add(reload);
+        file.add(open);
+
+        JMenuBar bar = new JMenuBar();
+        bar.add(file);
+        return bar;
     }
 
     private JPanel getFileInfo(File f, ObjectDataStructure ods){
