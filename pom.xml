@@ -50,7 +50,7 @@
     <repositories>
         <repository>
             <id>Ryandw11-SNAPSHOT</id>
-            <url>https://repo.thevideogamevillage.com/repository/maven-snapshots/</url>
+            <url>https://repo.ryandw11.com/repository/maven-snapshots/</url>
         </repository>
     </repositories>
     <dependencies>
