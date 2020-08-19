@@ -1,8 +1,10 @@
 package me.ryandw11.odsvisualizer;
 
 import me.ryandw11.ods.Compression;
+import me.ryandw11.ods.ODS;
 import me.ryandw11.ods.ObjectDataStructure;
 import me.ryandw11.ods.Tag;
+import me.ryandw11.ods.tags.InvalidTag;
 import me.ryandw11.ods.tags.ListTag;
 import me.ryandw11.ods.tags.ObjectTag;
 
@@ -36,6 +38,7 @@ public class ViewFile extends JFrame {
         this.setLocationRelativeTo(null);
         System.out.println(getCompressionType(file));
         ObjectDataStructure ods = new ObjectDataStructure(file, getCompressionType(file));
+        ODS.allowUndefinedTags(true);
         this.ods = ods;
 
         DefaultMutableTreeNode top = new DefaultMutableTreeNode(file.getName());
@@ -134,6 +137,10 @@ public class ViewFile extends JFrame {
             tagPnl.add(new JLabel("Tag Name: " + tag.getName()));
             tagPnl.add(new JLabel("Tag Type: " + tag.getClass().getSimpleName()));
             tagPnl.add(new JLabel("# of Elements: " + ((ListTag<?>) tag).getValue().size()));
+        }else if(tag instanceof InvalidTag){
+            tagPnl.add(new JLabel("Tag Name: " + tag.getName()));
+            tagPnl.add(new JLabel("Tag Type: " + tag.getClass().getSimpleName()));
+            tagPnl.add(new JLabel("Tag Size: " + ((InvalidTag) tag).getValue().length + " Bytes"));
         }else{
             tagPnl.add(new JLabel("Tag Name: " + tag.getName()));
             tagPnl.add(new JLabel("Tag Value: " + tag.getValue()));
@@ -158,6 +165,8 @@ public class ViewFile extends JFrame {
                 DefaultMutableTreeNode cat = new DefaultMutableTreeNode(new TagHolder(prefix + tag.getName() + " :: List[" + listTag.getValue().size() + "]", tag));
                 createNodes(cat, listTag.getValue(), true);
                 top.add(cat);
+            }else if(tag instanceof InvalidTag){
+                top.add(new DefaultMutableTreeNode(new TagHolder(prefix + tag.getName() + " :: CustomTag [" + ((InvalidTag) tag).getValue().length + " Bytes]", tag)));
             }
             else{
                 top.add(new DefaultMutableTreeNode(new TagHolder(prefix + tag.getName() + " :: " + tag.getValue(), tag)));
