@@ -4,9 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+/**
+ * The prompt to ask for a file.
+ */
 public class LoadFile extends JFrame {
     File file;
-    public LoadFile(){
+
+    public LoadFile() {
         super("Load file");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 230);
@@ -37,11 +41,11 @@ public class LoadFile extends JFrame {
         pnl.setLayout(new BoxLayout(pnl, BoxLayout.PAGE_AXIS));
 
         btn.addActionListener(e -> {
-            FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+            FileDialog dialog = new FileDialog((Frame) null, "Select File to Open");
             dialog.setMode(FileDialog.LOAD);
             dialog.setVisible(true);
             File tempFile = new File(dialog.getDirectory() + dialog.getFile());
-            if(!tempFile.exists()){
+            if (!tempFile.exists()) {
                 selectedFile.setText("No selected file.");
                 submit.setEnabled(false);
                 return;
@@ -53,7 +57,7 @@ public class LoadFile extends JFrame {
         });
 
         submit.addActionListener(e -> {
-            if(file == null || !file.exists()){
+            if (file == null || !file.exists()) {
                 JOptionPane.showMessageDialog(null, "No file was selected or the file was not found!", "File Not Found", JOptionPane.ERROR_MESSAGE);
             }
 

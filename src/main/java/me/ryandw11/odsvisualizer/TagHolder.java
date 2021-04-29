@@ -2,25 +2,44 @@ package me.ryandw11.odsvisualizer;
 
 import me.ryandw11.ods.Tag;
 
+/**
+ * Hold data for a tag.
+ */
 public class TagHolder {
-    private Tag<?> tag;
-    String info;
+    private final Tag<?> tag;
+    private final String info;
 
-    public TagHolder(String info, Tag<?> tag){
+    /**
+     * Create a TagHolder.
+     *
+     * @param info The information about the tag.
+     * @param tag  The tag.
+     */
+    public TagHolder(String info, Tag<?> tag) {
         this.tag = tag;
         this.info = info;
     }
 
-    public Tag<?> getTag(){
+    /**
+     * Get the tag.
+     *
+     * @return The tag.
+     */
+    public Tag<?> getTag() {
         return tag;
     }
 
-    public String getInfo(){
+    /**
+     * Get the information.
+     *
+     * @return The information.
+     */
+    public String getInfo() {
         return this.info;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return info;
     }
 }

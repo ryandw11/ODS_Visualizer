@@ -4,6 +4,7 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
+        // Allows the user to use command arguments for the file.
         if (args.length >= 1) {
             for (String arg : args) {
                 File file = new File(arg);
