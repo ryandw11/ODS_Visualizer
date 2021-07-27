@@ -1,5 +1,6 @@
 package me.ryandw11.odsvisualizer;
 
+import com.github.luben.zstd.ZstdInputStream;
 import me.ryandw11.ods.ODS;
 import me.ryandw11.ods.ObjectDataStructure;
 import me.ryandw11.ods.Tag;
@@ -12,6 +13,7 @@ import me.ryandw11.ods.tags.CompressedObjectTag;
 import me.ryandw11.ods.tags.InvalidTag;
 import me.ryandw11.ods.tags.ListTag;
 import me.ryandw11.ods.tags.ObjectTag;
+import me.ryandw11.odscp.zstd.ZSTDCompression;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,6 +25,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
@@ -253,6 +256,14 @@ public class ViewFile extends JFrame {
         }
         if (!error)
             return new ZLIBCompression();
+        error = false;
+        try {
+            new ZstdInputStream(new FileInputStream(f)).read();
+        }catch (IOException e) {
+            error = true;
+        }
+        if(!error)
+            return new ZSTDCompression();
         return new NoCompression();
     }
 
