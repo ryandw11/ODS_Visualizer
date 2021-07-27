@@ -11,4 +11,5 @@ After selecting a file a tree is shown. (Large files could take some time to loa
 Select on an object in the tree to view it's properties.
 
 ## Pre-Compiled Download
-[Click here for a pre-compiled jar file](https://github.com/ryandw11/ODS_Visualizer/releases/)
+[Click here for a pre-compiled jar file](https://github.com/ryandw11/ODS_Visualizer/releases/)  
+**Note:** Pre-Compiled jar files require Java 11+ to run.
